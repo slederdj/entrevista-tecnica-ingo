@@ -13,6 +13,7 @@ Desarrolle una función que dada una hora en un formato de 12 horas ([horas]:[mi
 * A las 12:00 pm empiezan las horas de tarde      
 * A las 6:00 pm empiezan las horas de noche       
 * A las 12:00 am empiezan las horas de la mañana
+
 Ejemplos
 
 * 9:05am ==> "Son las nueve y cinco de la mañana"
