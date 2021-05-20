@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<title>Time convert</title>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <link rel="stylesheet" href="style.css">    
+</head>
+
+<body>
+    <div id="content" class="content">
+        <h1>Convertidor de HHMM</h1>
+        <div id="selectTime" class="selectTime">
+            <label for="hh"> HH:</label>
+            <input type="number" name="hh" id="hh" value="12" min="1" max="12">
+            <label for="mm"> MM:</label>
+            <input type="number" name="mm" id="mm" value="00" min="00" max="59">
+            <label for=""></label>
+            <select name="daytime" id="daytime">
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+            </select>
+        </div>
+        <div id="buttonConvert" class="buttonConvert">
+            <input type="button" value="Convertir" onclick="convert()" />
+        </div>
+        <br>
+    </div>
+    <script type="text/javascript" src="index.js"></script>
+</body>
+
+</html>

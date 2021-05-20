@@ -1,0 +1,11 @@
+.content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 50%;
+}
+
+.selectTime {
+    margin-top: 10px !important;
+}
