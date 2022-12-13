@@ -1,0 +1,1310 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "CRM-API GO Implementation",
+    "description": "This is a sample CRM API documentation based on the OpenAPI 3.0.0 specification.",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://locahost:8000/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "players",
+      "description": "Operation about player"
+    }
+  ],
+  "paths": {
+    "/players": {
+      "post": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Add a new player to the CRM",
+        "description": "Add a new player to the CRM",
+        "operationId": "addPlayer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/player-signup"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/player-signup"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/player-signup"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/player-signup-2"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ok"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bad-request"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/conflict-request"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/general-error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/login": {
+      "post": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Grant access to the CRM by player",
+        "description": "Grant access to the CRM by player",
+        "operationId": "loginPlayer",
+        "requestBody": {
+          "description": "Login a player in the CRM",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ok"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ok"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/players/recovery": {
+      "post": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Send an email wich contain a token use for the recovery password proccess",
+        "description": "Send an email wich contain a token use for the recovery password proccess",
+        "operationId": "recoveryPassword",
+        "requestBody": {
+          "description": "Recovery Password process.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/recovery"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/recovery"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/recovery"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ok"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ok"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/players/recovery/{token}": {
+      "post": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Validate token for recovery password process",
+        "description": "Validate token for recovery password process",
+        "operationId": "validateToken",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "path",
+            "description": "token used for recovery password",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ok"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ok"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/players/{username}": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Get player information",
+        "description": "Get specific player sensitive information",
+        "operationId": "getPlayer",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "Username to fetch information",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/player-sensitive-info"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bad-request"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/general-error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Update player information",
+        "description": "Update player information",
+        "operationId": "updatePlayer",
+        "requestBody": {
+          "description": "Update player information",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/player-update"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "username belonging to player whose info is going to be updated",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/player-update-2"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "$ref": "#/components/schemas/ok"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bad-request"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/general-error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/filter": {
+      "post": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Get players list by filters",
+        "description": "Get multiple players matching filters",
+        "operationId": "playerFilter",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/player-filter"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/player-filter-2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bad-request"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/general-error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/players/search": {
+      "post": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Get players information by username",
+        "description": "Get multiple players information by their username",
+        "operationId": "playerSearch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/player-search"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/player-search-2"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/bad-request"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/general-error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basic_auth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    },
+    "schemas": {
+      "player-signup": {
+        "required": [
+          "BookID",
+          "Password",
+          "FirstName",
+          "LastName",
+          "Email",
+          "DateOfBirth"
+        ],
+        "type": "object",
+        "properties": {
+          "PlayerID": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "BookID": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "StatusID": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "Lang": {
+            "type": "string",
+            "example": "es"
+          },
+          "SelfExclusionID": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "TimeZoneID": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "Password": {
+            "type": "string",
+            "example": "A1873fK8H^h29l)216152687d&9_0a"
+          },
+          "PersonalID": {
+            "type": "integer",
+            "format": "int64",
+            "example": 209010203
+          },
+          "FirstName": {
+            "type": "string",
+            "example": "TEST"
+          },
+          "MiddleName": {
+            "type": "string",
+            "example": "TEST2"
+          },
+          "LastName": {
+            "type": "string",
+            "example": "TEST3"
+          },
+          "SecondLastName": {
+            "type": "string",
+            "example": "TEST4"
+          },
+          "Email": {
+            "type": "string",
+            "example": "someMail@domain.com"
+          },
+          "Phone": {
+            "type": "string",
+            "example": 24458917
+          },
+          "Mobile": {
+            "type": "string",
+            "example": 87126753
+          },
+          "Gender": {
+            "type": "string",
+            "example": "male"
+          },
+          "Title": {
+            "type": "string",
+            "example": "mr"
+          },
+          "PinCode": {
+            "type": "integer",
+            "format": "int64",
+            "example": 278126
+          },
+          "City": {
+            "type": "string",
+            "example": "Alajuela"
+          },
+          "Address1": {
+            "type": "string",
+            "example": "Address 1 go here"
+          },
+          "Address2": {
+            "type": "string",
+            "example": "Address 2 go here"
+          },
+          "ZipCode": {
+            "type": "integer",
+            "format": "int64",
+            "example": 20912
+          },
+          "Country": {
+            "type": "string",
+            "example": "CR"
+          },
+          "State": {
+            "type": "string",
+            "example": "AJ"
+          },
+          "DateOfBirth": {
+            "type": "string",
+            "example": "2000-01-21"
+          },
+          "DateAccountOpened": {
+            "type": "string",
+            "example": "2000-01-21"
+          },
+          "TermsAndConditions": {
+            "type": "boolean",
+            "example": true
+          },
+          "MarketingConditions": {
+            "type": "boolean",
+            "example": true
+          },
+          "CurrencyID": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "UniqueID": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "SignUpIP": {
+            "type": "string",
+            "example": "127.0.0.1"
+          },
+          "DateLastPasswordUpdate": {
+            "type": "string",
+            "example": "2000-01-21"
+          },
+          "LastChangedBy": {
+            "type": "string",
+            "example": "USER"
+          },
+          "ExtraInfo": {
+            "type": "object"
+          },
+          "Username": {
+            "type": "string",
+            "example": "BC2022153942"
+          },
+          "Separator": {
+            "type": "boolean"
+          }
+        },
+        "xml": {
+          "name": "player"
+        }
+      },
+      "player-signup-2": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "response": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Player created succesfully"
+              },
+              "requireEmailVerification": {
+                "type": "boolean"
+              },
+              "username": {
+                "type": "string",
+                "example": "BC2022110010"
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      },
+      "ok": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      },
+      "bad-request": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "response": {
+            "properties": {
+              "errorCode": {
+                "type": "integer",
+                "format": "int32",
+                "example": 7
+              },
+              "message": {
+                "type": "string",
+                "example": "Malformed JSON"
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      },
+      "conflict-request": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "response": {
+            "properties": {
+              "errorCode": {
+                "type": "integer",
+                "format": "int32",
+                "example": 15
+              },
+              "message": {
+                "type": "string",
+                "example": "Email: someMail@domain.com already exists"
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      },
+      "general-error": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "response": {
+            "properties": {
+              "errorCode": {
+                "type": "integer",
+                "format": "int32",
+                "example": 10
+              },
+              "message": {
+                "type": "string",
+                "example": "Error performing operation"
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      },
+      "login": {
+        "required": [
+          "Username",
+          "Password",
+          "BookID",
+          "SignUpIP"
+        ],
+        "type": "object",
+        "properties": {
+          "Username": {
+            "type": "string",
+            "example": "TEST"
+          },
+          "Password": {
+            "type": "string",
+            "example": "TEST"
+          },
+          "BookID": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "Domain": {
+            "type": "string",
+            "example": "TEST"
+          },
+          "SignUpIP": {
+            "type": "string",
+            "example": "TEST"
+          },
+          "URL": {
+            "type": "string",
+            "example": "TEST"
+          },
+          "GeoIpCountry": {
+            "type": "string",
+            "example": "TEST"
+          },
+          "GeoIpRegion": {
+            "type": "string",
+            "example": "TEST"
+          },
+          "GeoIpCity": {
+            "type": "string",
+            "example": "TEST"
+          },
+          "GeoIpContinent": {
+            "type": "string",
+            "example": "TEST"
+          },
+          "Device": {
+            "type": "string",
+            "example": "TEST"
+          }
+        },
+        "xml": {
+          "name": "login"
+        }
+      },
+      "recovery": {
+        "required": [
+          "Username",
+          "BookID"
+        ],
+        "type": "object",
+        "properties": {
+          "Username": {
+            "type": "string",
+            "example": "TEST"
+          },
+          "BookID": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          }
+        },
+        "xml": {
+          "name": "login"
+        }
+      },
+      "player-sensitive-info": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "response": {
+            "properties": {
+              "player": {
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "example": "MIDASBC"
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "TEST"
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "example": "TEST1"
+                  },
+                  "secondLastName": {
+                    "type": "string",
+                    "example": "TEST2"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": 24457812
+                  },
+                  "mobile": {
+                    "type": "string",
+                    "example": 98761234
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "somemail@domain.com"
+                  },
+                  "signUpIp": {
+                    "type": "string",
+                    "example": "127.0.0.1"
+                  },
+                  "dateOfBirth": {
+                    "type": "string",
+                    "example": "1998-09-12"
+                  },
+                  "lastChangedBy": {
+                    "type": "string",
+                    "example": "USER"
+                  },
+                  "address1": {
+                    "type": "string",
+                    "example": "Address 1 goes here"
+                  },
+                  "address2": {
+                    "type": "string",
+                    "example": "Address 2 goes here"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "Queens"
+                  },
+                  "state": {
+                    "type": "string",
+                    "example": "NY"
+                  },
+                  "country": {
+                    "type": "string",
+                    "example": "US"
+                  },
+                  "zipCode": {
+                    "type": "integer",
+                    "format": "int32",
+                    "example": 11101
+                  }
+                }
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      },
+      "player-update": {
+        "required": [
+          "FirstName",
+          "LastName",
+          "Email",
+          "Phone",
+          "Address1",
+          "ZipCode",
+          "City",
+          "Country",
+          "State",
+          "DateOfBirth"
+        ],
+        "type": "object",
+        "properties": {
+          "FirstName": {
+            "type": "string",
+            "example": "TEST"
+          },
+          "LastName": {
+            "type": "string",
+            "example": "TEST1"
+          },
+          "Email": {
+            "type": "string",
+            "example": "someMail@domain.com"
+          },
+          "Phone": {
+            "type": "string",
+            "example": 1913871265
+          },
+          "City": {
+            "type": "string",
+            "example": "Arizona city"
+          },
+          "Address1": {
+            "type": "string",
+            "example": "Address1 goes here"
+          },
+          "ZipCode": {
+            "type": "integer",
+            "format": "int64",
+            "example": 29122
+          },
+          "Country": {
+            "type": "string",
+            "example": "US"
+          },
+          "State": {
+            "type": "string",
+            "example": "AZ"
+          },
+          "DateOfBirth": {
+            "type": "string",
+            "example": "2000-04-12"
+          }
+        },
+        "xml": {
+          "name": "player"
+        }
+      },
+      "player-update-2": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "response": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Player information updated"
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      },
+      "player-filter": {
+        "required": [
+          "Separator"
+        ],
+        "type": "object",
+        "properties": {
+          "Separator": {
+            "type": "boolean"
+          },
+          "Username": {
+            "type": "string",
+            "example": "MIDASBC"
+          },
+          "FirstName": {
+            "type": "string",
+            "example": "TEST"
+          },
+          "LastName": {
+            "type": "string",
+            "example": "TEST1"
+          },
+          "Email": {
+            "type": "string",
+            "example": "someMail@domain.com"
+          },
+          "Phone": {
+            "type": "string",
+            "example": 1913871265
+          },
+          "City": {
+            "type": "string",
+            "example": "Arizona city"
+          },
+          "ZipCode": {
+            "type": "integer",
+            "format": "int64",
+            "example": 29122
+          },
+          "Country": {
+            "type": "string",
+            "example": "US"
+          },
+          "State": {
+            "type": "string",
+            "example": "AZ"
+          },
+          "DateOfBirth": {
+            "type": "string",
+            "example": "2000-04-12"
+          },
+          "SignUpIp": {
+            "type": "string",
+            "example": "127.0.0.1"
+          }
+        },
+        "xml": {
+          "name": "player"
+        }
+      },
+      "player-filter-2": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "response": {
+            "properties": {
+              "players": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "BC2022153942",
+                  "BC2022153942"
+                ]
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      },
+      "player-search": {
+        "required": [
+          "Username"
+        ],
+        "type": "object",
+        "properties": {
+          "Username": {
+            "type": "string",
+            "example": "MIDASBC,MIDASBC2"
+          }
+        },
+        "xml": {
+          "name": "player"
+        }
+      },
+      "player-search-2": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "response": {
+            "properties": {
+              "players": {
+                "type": "object",
+                "properties": {
+                  "BC2022104309": {
+                    "properties": {
+                      "address1": {
+                        "type": "string",
+                        "example": "Address1 goes here"
+                      },
+                      "address2": {
+                        "type": "string",
+                        "example": "Address2 goes here"
+                      },
+                      "city": {
+                        "type": "string",
+                        "example": "Alajuela"
+                      },
+                      "country": {
+                        "type": "string",
+                        "example": "Costa Rica"
+                      },
+                      "dateOfBirth": {
+                        "type": "string",
+                        "example": "2000-12-01"
+                      },
+                      "domainName": {
+                        "type": "string",
+                        "example": "company.com"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "someMail@domain.com"
+                      },
+                      "firstName": {
+                        "type": "string",
+                        "example": "TEST"
+                      },
+                      "geoIPCity": {
+                        "type": "string",
+                        "example": "Alajuela"
+                      },
+                      "geoIPContinent": {
+                        "type": "string",
+                        "example": "America"
+                      },
+                      "geoIPCountry": {
+                        "type": "string",
+                        "example": "Costa Rica"
+                      },
+                      "geoIPRegion": {
+                        "type": "string",
+                        "example": "America"
+                      },
+                      "lastChangedBy": {
+                        "type": "string",
+                        "example": "USER"
+                      },
+                      "lastName": {
+                        "type": "string",
+                        "example": "TEST2"
+                      },
+                      "middleName": {
+                        "type": "string",
+                        "example": "TEST3"
+                      },
+                      "mobile": {
+                        "type": "string",
+                        "example": 87981234
+                      },
+                      "phone": {
+                        "type": "string",
+                        "example": 24451267
+                      },
+                      "secondLastName": {
+                        "type": "string",
+                        "example": "TEST4"
+                      },
+                      "signUpIP": {
+                        "type": "string",
+                        "example": "127.0.0.1"
+                      },
+                      "state": {
+                        "type": "string",
+                        "example": "Alajuela"
+                      },
+                      "zipCode": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 20102
+                      }
+                    }
+                  },
+                  "BC2022135609": {
+                    "properties": {
+                      "address1": {
+                        "type": "string",
+                        "example": "Address1 goes here"
+                      },
+                      "address2": {
+                        "type": "string",
+                        "example": "Address2 goes here"
+                      },
+                      "city": {
+                        "type": "string",
+                        "example": "Alajuela"
+                      },
+                      "country": {
+                        "type": "string",
+                        "example": "Costa Rica"
+                      },
+                      "dateOfBirth": {
+                        "type": "string",
+                        "example": "2000-12-01"
+                      },
+                      "domainName": {
+                        "type": "string",
+                        "example": "company.com"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "someMail@domain.com"
+                      },
+                      "firstName": {
+                        "type": "string",
+                        "example": "TEST"
+                      },
+                      "geoIPCity": {
+                        "type": "string",
+                        "example": "Alajuela"
+                      },
+                      "geoIPContinent": {
+                        "type": "string",
+                        "example": "America"
+                      },
+                      "geoIPCountry": {
+                        "type": "string",
+                        "example": "Costa Rica"
+                      },
+                      "geoIPRegion": {
+                        "type": "string",
+                        "example": "America"
+                      },
+                      "lastChangedBy": {
+                        "type": "string",
+                        "example": "USER"
+                      },
+                      "lastName": {
+                        "type": "string",
+                        "example": "TEST2"
+                      },
+                      "middleName": {
+                        "type": "string",
+                        "example": "TEST3"
+                      },
+                      "mobile": {
+                        "type": "string",
+                        "example": 87981234
+                      },
+                      "phone": {
+                        "type": "string",
+                        "example": 24451267
+                      },
+                      "secondLastName": {
+                        "type": "string",
+                        "example": "TEST4"
+                      },
+                      "signUpIP": {
+                        "type": "string",
+                        "example": "127.0.0.1"
+                      },
+                      "state": {
+                        "type": "string",
+                        "example": "Alajuela"
+                      },
+                      "zipCode": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 20102
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "xml": {
+          "name": "##default"
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "basic_auth": []
+    }
+  ]
+}
